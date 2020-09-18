@@ -1,0 +1,25 @@
+{
+    "name": "fast-elephant/laravel-regeo",
+    "description": "逆地理解析 坐标转地址服务 优先请求QQ地图服务 失败后请求高德地图服务",
+    "type": "library",
+    "require": {
+        "php": "^7.0"
+    },
+    "require-dev": {
+        "php": "^7.0"
+    },
+    "authors": [
+        {
+            "name": "miaoxz",
+            "email": "2444947559@qq.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "extra": {
+        "laravel": {
+            "providers": [
+                "FastElephant\\LaravelRegeo\\RegeoServiceProvider"
+            ]
+        }
+    }
+}
