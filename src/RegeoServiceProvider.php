@@ -16,7 +16,7 @@ class RegeoServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            $this->getConfigFile() => config_path('courier.php'),
+            $this->getConfigFile() => config_path('regeo.php'),
         ]);
     }
 
