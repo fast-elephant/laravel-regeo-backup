@@ -17,10 +17,10 @@ class Regeo
 
     public function parse($lng, $lat)
     {
-        $response = $this->qqmapRegeo($lng, $lat, config('regeo.qqmap.key'));
+        $response = $this->qqmapParseResponse($this->qqmapRegeo($lng, $lat, config('regeo.qqmap.key')));
 
-        if ($response['code'] != '10000') {
-            $response = $this->amapRegeo($lng, $lat, config('regeo.amap.key'));
+        if ($response['state'] != '10000') {
+            $response = $this->amapParseResponse($this->amapRegeo($lng, $lat, config('regeo.amap.key')));
         }
 
         return $response;
