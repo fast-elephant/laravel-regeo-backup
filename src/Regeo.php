@@ -46,16 +46,22 @@ class Regeo
 
     protected function qqmapRegeo($lng, $lat, $key)
     {
-        $url = 'https://apis.map.qq.com/ws/geocoder/v1/?location=' . $lat . ',' . $lng . '&key=' . $key;
-
-        return file_get_contents($url, 0, $this->context);
+        try {
+            $url = 'https://apis.map.qq.com/ws/geocoder/v1/?location=' . $lat . ',' . $lng . '&key=' . $key;
+            return file_get_contents($url, 0, $this->context);
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     protected function amapRegeo($lng, $lat, $key)
     {
-        $url = 'https://restapi.amap.com/v3/geocode/regeo?key=' . $key . '&location=' . $lng . ',' . $lat . '&poitype=&radius=&extensions=base&batch=false&roadlevel=0';
-
-        return file_get_contents($url, 0, $this->context);
+        try {
+            $url = 'https://restapi.amap.com/v3/geocode/regeo?key=' . $key . '&location=' . $lng . ',' . $lat . '&poitype=&radius=&extensions=base&batch=false&roadlevel=0';
+            return file_get_contents($url, 0, $this->context);
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     protected function qqmapParseResponse(string $response)
