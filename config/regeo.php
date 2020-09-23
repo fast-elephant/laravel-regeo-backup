@@ -2,13 +2,13 @@
 
 return [
 
-    'timeout' => 1,
+    'timeout' => 1, // request timeout
 
-    'qqmap' => [
+    'qqmap' => [ // qq map key
         'key' => ''
     ],
 
-    'amap' => [
+    'amap' => [ // amap key
         'key' => ''
     ],
 ];

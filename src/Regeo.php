@@ -74,7 +74,6 @@ class Regeo
 
         if ($infocode === 0) {
             return [
-                'response' => $response,
                 'state'    => '10000',
                 'province' => array_get($response, 'result.address_component.province', ''),
                 'city'     => array_get($response, 'result.address_component.city', ''),
@@ -100,7 +99,6 @@ class Regeo
 
         if ($infocode === '10000') {
             return [
-                'response' => $response,
                 'state'    => '10000',
                 'province' => array_get($response, 'regeocode.addressComponent.province', ''),
                 'city'     => array_get($response, 'regeocode.addressComponent.city', ''),
@@ -111,7 +109,6 @@ class Regeo
         }
 
         return [
-            'response' => $response,
             'state'    => $infocode,
         ];
     }

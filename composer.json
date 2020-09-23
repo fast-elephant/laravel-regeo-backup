@@ -24,7 +24,8 @@
             "email": "2444947559@qq.com"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
+    "license": "MIT",
     "extra": {
         "laravel": {
             "providers": [
