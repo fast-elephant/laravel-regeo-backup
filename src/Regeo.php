@@ -26,6 +26,17 @@ class Regeo
         return $response;
     }
 
+    public function bicycling($originLng, $originLat, $destinationLng, $destinationLat)
+    {
+        $response = $this->amapBicyclingResponse($this->amapBicycling($originLng . ',' . $originLat, $destinationLng . ',' . $destinationLat, config('regeo.amap.key')));
+
+        if ($response['state'] != '10000') {
+            $response = $this->qqmapBicyclingResponse($this->qqmapBicycling($originLat . ',' . $originLng, $destinationLat . ',' .$destinationLng, config('regeo.qqmap.key')));
+        }
+
+        return $response;
+    }
+
     public function getLog()
     {
         return $this->log;
@@ -109,6 +120,70 @@ class Regeo
         }
 
         return [
+            'state'    => $infocode,
+        ];
+    }
+
+    protected function amapBicycling($origin, $destination, $key)
+    {
+        try {
+            $url = 'https://restapi.amap.com/v4/direction/bicycling?key=' . $key . '&origin=' . $origin . '&destination=' . $destination;
+            return file_get_contents($url, 0, $this->context);
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
+    protected function qqmapBicycling($from, $to, $key)
+    {
+        try {
+            $url = 'https://apis.map.qq.com/ws/direction/v1/bicycling/?from=' . $from . '&to=' . $to . '&key=' . $key;
+            return file_get_contents($url, 0, $this->context);
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
+    protected function amapBicyclingResponse(string $response)
+    {
+        $this->log($response);
+
+        $response = json_decode($response, true);
+
+        $infocode = array_get($response, 'errcode', 30000);
+
+        if ($infocode === 0) {
+            return [
+                'state'    => '10000',
+                'distance' => array_get($response, 'data.paths.0.distance', 0),
+                'duration' => array_get($response, 'data.paths.0.duration', 0),
+            ];
+        }
+
+        return [
+            'response' => $response,
+            'state'    => $infocode,
+        ];
+    }
+
+    protected function qqmapBicyclingResponse(string $response)
+    {
+        $this->log($response);
+
+        $response = json_decode($response, true);
+
+        $infocode = array_get($response, 'status', 500);
+
+        if ($infocode === 0) {
+            return [
+                'state'    => '10000',
+                'distance' => array_get($response, 'result.routes.0.distance', 0),
+                'duration' => array_get($response, 'result.routes.0.duration', 0) * 60,
+            ];
+        }
+
+        return [
+            'response' => $response,
             'state'    => $infocode,
         ];
     }
