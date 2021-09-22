@@ -37,6 +37,16 @@ class Regeo
         return $response;
     }
 
+    public function bicyclingWithKey($oriLng, $oriLat, $destLng, $destLat, $key, $map = 'qq')
+    {
+        if ('qq' == $map) {
+            return $this->qqmapBicyclingResponse($this->qqmapBicycling($oriLat . ',' . $oriLng, $destLat . ',' . $destLng, $key));
+        }
+        if ('amap' == $map) {
+            return $this->amapBicyclingResponse($this->amapBicycling($oriLng . ',' . $oriLat, $destLng . ',' . $destLat, $key));
+        }
+    }
+
     public function getLog()
     {
         return $this->log;
