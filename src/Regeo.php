@@ -26,6 +26,16 @@ class Regeo
         return $response;
     }
 
+    public function qqmapParse($lng, $lat, $key)
+    {
+        return $this->qqmapParseResponse($this->qqmapRegeo($lng, $lat, $key));
+    }
+
+    public function amapParse($lng, $lat, $key)
+    {
+        return $this->amapParseResponse($this->amapRegeo($lng, $lat, $key));
+    }
+
     public function bicycling($originLng, $originLat, $destinationLng, $destinationLat)
     {
         $response = $this->amapBicyclingResponse($this->amapBicycling($originLng . ',' . $originLat, $destinationLng . ',' . $destinationLat, config('regeo.amap.key')));
